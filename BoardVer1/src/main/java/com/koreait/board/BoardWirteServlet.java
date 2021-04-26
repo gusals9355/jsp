@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/write")
 public class BoardWirteServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String no = request.getParameter("no");
+		if(no != null) {
+			request.setAttribute("data", Database.list.get(Integer.parseInt(no)-1));
+		}
 		
 		String jsp = "WEB-INF/jsp/write.jsp";
 		RequestDispatcher dis = request.getRequestDispatcher(jsp);
@@ -21,13 +24,17 @@ public class BoardWirteServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String no = request.getParameter("no");
+		if(no != "") {
+			Database.list.remove(Integer.parseInt(no)-1);
+		}
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
-		request.setCharacterEncoding("UTF-8");
 		//브라우저에서 넘어오면 getparameter
 		BoardVO vo = new BoardVO();
 		vo.setTitle(title);
-		vo.setTitle(ctnt);
+		vo.setCtnt(ctnt);
 		
 		Database.list.add(vo);
 		

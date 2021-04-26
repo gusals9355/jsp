@@ -8,15 +8,16 @@
 </head>
 <body>
 	<h1>글쓰기</h1>
-	<form action="/write" method="post">
+	<form action="/write?no=${param.no }" method="post">
 		<div>
-			제목 : <input type="text" name="title">
+			제목 : <input type="text" name="title" value="${data.getTitle() }">
 		</div>
 		<div>
-			내용 : <textarea name="ctnt" cols="10"></textarea>
+			내용 : <input type="text" name="ctnt" value="${data.getCtnt() }">
 		</div>
 		<div>
 			<input type="submit" value="글쓰기">
+			<button type="button" onclick="history.back()">뒤로가기</button>
 		</div>
 	</form>
 </body>
