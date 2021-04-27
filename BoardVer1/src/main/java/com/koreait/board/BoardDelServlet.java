@@ -12,14 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/del")
 public class BoardDelServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String no = request.getParameter("no");
-		System.out.println(no);
-		Database.list.remove(Integer.parseInt(no)-1);
-		response.sendRedirect("/list");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String no = request.getParameter("no");
+		Database.list.remove(Integer.parseInt(no));
 		
+		response.sendRedirect("/list");
 	}
 
 }

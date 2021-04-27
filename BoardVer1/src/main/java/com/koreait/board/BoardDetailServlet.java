@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/detail")
 public class BoardDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String no = request.getParameter("no");
-		request.setAttribute("data", Database.list.get(Integer.parseInt(no)-1));
+		request.setAttribute("data", Database.list.get(Integer.parseInt(no)));
+		
 		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/detail.jsp");
 		dis.forward(request, response);
 	}
