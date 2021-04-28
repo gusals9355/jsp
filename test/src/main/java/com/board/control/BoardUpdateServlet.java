@@ -30,6 +30,7 @@ public class BoardUpdateServlet extends HttpServlet {
 		dis.forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String no = request.getParameter("no");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");

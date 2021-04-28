@@ -16,7 +16,6 @@
 </head>
 <body>
 	<h1>리스트</h1>
-	
 	<div>
 		<a href="/write">글쓰기</a>
 	</div>
@@ -24,11 +23,13 @@
 		<tr>
 			<th>글 번호
 			<th>글 제목
+			<th>조회수
 	<c:forEach var="vo" items="${data }">
 		<div>
 		<tr>
 			<td><c:out value="${vo.getNo() }"/>
 			<td><a href="/detail?no=${vo.getNo() }">${vo.getTitle() }</a>
+			<td><c:out value="${vo.getReadCount() }"/>
 		</div>
 	</c:forEach>
 	</table>
