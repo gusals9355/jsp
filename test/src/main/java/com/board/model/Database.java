@@ -48,7 +48,7 @@ public class Database {
 		getCon();
 		
 		try {
-			String sql = "select * from board";
+			String sql = "select * from board order by no desc";
 			pstmt = con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			
@@ -58,6 +58,7 @@ public class Database {
 				bean.setTitle(rs.getString(2));
 				bean.setContent(rs.getString(3));
 				bean.setReadCount(rs.getInt(4));
+				bean.setReg_date(rs.getString(5));
 				list.add(bean);
 			}
 			con.close();
@@ -172,7 +173,7 @@ public class Database {
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				BoardBean bean = new BoardBean();
 				bean.setNo(rs.getInt(1));
 				bean.setId(rs.getString(2));
@@ -187,6 +188,44 @@ public class Database {
 		
 		return list;
 	}
+
+	public BoardBean selectSearch(String search) {
+		BoardBean bean = new BoardBean();
+		String title = getTitle(search);
+		getCon();
+		try {
+			String sql = "select * from board where title = ?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.executeQuery();
+			if(rs.next()) {
+				bean.setNo(rs.getInt(1));
+				bean.setTitle(rs.getString(2));
+				bean.setContent(rs.getString(3));
+				bean.setReadCount(rs.getInt(4));
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bean;
+	}
 	
-	
+	public String getTitle(String search) {
+		String title="";
+		getCon();
+		try {
+			String sql = "select title from board where title like ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				title = rs.getString(1);
+			}
+			con.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return title;
+	}
 }

@@ -21,13 +21,19 @@ public class BoardDetailServlet extends HttpServlet {
 		
 		ds.readCountUp(Integer.parseInt(no));
 		request.setAttribute("data", ds.getOneBoard(Integer.parseInt(no)));
-		
+		request.setAttribute("reple", ds.selectReple(Integer.parseInt(no)));
 		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/detail.jsp");
 		dis.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String no = request.getParameter("no");
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String reple = request.getParameter("reple");
+		Database db = new Database();
+		db.insertReple(Integer.parseInt(no), id, pw, reple);
+		doGet(request, response);
 	}
 
 }

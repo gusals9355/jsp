@@ -26,6 +26,7 @@ public class BoardWirteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String no = request.getParameter("no");
+		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		//브라우저에서 넘어오면 getparameter
