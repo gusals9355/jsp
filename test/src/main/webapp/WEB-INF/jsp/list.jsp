@@ -8,6 +8,15 @@
 	border: 1px solid black;
 	border-collapse: collapse; 
 	}
+	
+	.record{
+		cursor: pointer;
+	}
+	.record:hover {
+	background-color: aqua;
+	
+}
+	
 </style>
 <html>
 <head>
@@ -18,6 +27,8 @@
 	<h1>리스트</h1>
 	<div>
 		<a href="/write">글쓰기</a>
+		<a href="/login">로그인</a>
+		<a href="/join">회원가입</a>
 		<form action="/search" method="get">
 		<input type="text" name="search" >
 		<input type="submit" value="검색">
@@ -31,7 +42,7 @@
 			<th>조회수
 	<c:forEach var="vo" items="${data }">
 		<div>
-		<tr>
+		<tr class="record" onclick="moveToDetail(${vo.no })">
 			<td><c:out value="${vo.getNo() }"/>
 			<td><a href="/detail?no=${vo.getNo() }">${vo.getTitle() }</a>
 			<td><c:out value="${vo.getReadCount() }"/>
@@ -39,5 +50,11 @@
 		</div>
 	</c:forEach>
 	</table>
+	
+	<script>
+		function moveToDetail(no){
+			location.href='/detail?no='+no;
+		}
+	</script>
 </body>
 </html>

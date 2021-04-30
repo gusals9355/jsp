@@ -11,11 +11,11 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 public class Database {
-	Connection con;
-	PreparedStatement pstmt;
-	ResultSet rs;
+	static Connection con;
+	static PreparedStatement pstmt;
+	static ResultSet rs;
 	
-	public void getCon() {
+	public static void getCon() {
 		try {
 			Context initctx = new InitialContext();
 			
@@ -27,7 +27,7 @@ public class Database {
 		}
 	}
 	
-	public void insertBoard(BoardBean bean) {
+	public static void insertBoard(BoardBean bean) {
 		getCon();
 		
 		try {
@@ -41,6 +41,44 @@ public class Database {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static void insertMember(BoardMemberBean bean) {
+		getCon();
+		
+		try {
+			String sql = "insert into member2 values(?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getId());
+			pstmt.setString(2, bean.getPw());
+			pstmt.setString(3, bean.getEmail());
+			pstmt.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public List<BoardMemberBean> getId(BoardMemberBean bean){
+		List<BoardMemberBean> list = new ArrayList<BoardMemberBean>();
+		getCon();
+		
+		try {
+			String sql = "select id, pw from member2 where id = ? and pw = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getId());
+			pstmt.setString(2, bean.getPw());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	public List<BoardBean> getAllBoard(){
@@ -73,7 +111,6 @@ public class Database {
 		getCon();
 		
 		try {
-			
 			String sql = "select * from board where no = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, no);
@@ -228,4 +265,6 @@ public class Database {
 		}
 		return title;
 	}
+	
+
 }
