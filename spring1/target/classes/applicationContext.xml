@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ 		http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 	
+ 	<bean id="studentDao" class="dao.StudentDao"></bean>
+ 	
+ 	<bean id="registerService" class="service.RegisterService">
+ 		<constructor-arg ref="studentDao"></constructor-arg>
+ 		
+ 	</bean>
+ 	
+ 	<bean id ="modifyService" class="service.ModifyService">
+ 		<constructor-arg ref="studentDao"></constructor-arg>
+ 	</bean>
+ 	
+ 	<bean id ="selectService" class="service.SelectService">
+ 		<constructor-arg ref="studentDao"></constructor-arg>
+ 	</bean>
+ 	
+ 	<bean id ="deleteService" class="service.DeleteService">
+ 		<constructor-arg ref="studentDao"></constructor-arg>
+ 	</bean>
+ 	
+ 	<bean id ="allSelectService" class="service.AllSelectService">
+ 		<constructor-arg ref="studentDao"></constructor-arg>
+ 	</bean>
+ 	
+ 	<bean id="databaseRoot" class="main.DataBaseConnectionInfo">
+ 		<property name="jdbcUrl" value="dburl"></property>
+ 		<property name="userId" value="root"></property>
+ 		<property name="userPw" value="root"></property>
+ 	</bean>
+ 	
+ 	<bean id="databaseTest" class="main.DataBaseConnectionInfo">
+ 		<property name="jdbcUrl" value="dburl"></property>
+ 		<property name="userId" value="scott"></property>
+ 		<property name="userPw" value="tiger"></property>
+ 	</bean>
+ 	
+ 	<bean id="list" class="main.ListTypeDi">
+ 		<property name="developers">
+ 			<list>
+ 				<value>list1</value>
+ 				<value>list2</value>
+ 				<value>list3</value>
+ 				<value>list4</value>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	
+ 	<bean id="map" class="main.MapTypeDi">
+ 		<property name="map">
+ 			<map>
+ 				<entry>
+ 					<key>
+ 						<value>AKey</value>
+ 					</key>
+ 					<value>apple</value>
+ 				</entry>
+ 				<entry>
+ 					<key>
+ 						<value>BKey</value>
+ 					</key>
+ 					<value>banana</value>
+ 				</entry>
+ 				<entry>
+ 					<key>
+ 						<value>test</value>
+ 					</key>
+ 					<ref bean="databaseTest"></ref>
+ 				</entry>
+ 				<entry>
+ 					<key>
+ 						<value>root</value>
+ 					</key>
+ 					<ref bean="databaseRoot"></ref>
+ 				</entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	
+</beans>
