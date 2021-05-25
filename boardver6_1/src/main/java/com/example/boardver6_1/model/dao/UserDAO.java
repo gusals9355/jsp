@@ -8,4 +8,5 @@ public interface UserDAO {
 
     void insertUser(UserEntity vo);
     String UserIdChk(UserEntity vo);
+    UserEntity selUser(UserEntity vo);
 }

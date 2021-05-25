@@ -24,4 +24,4 @@
         <input type="reset" value="초기화">
     </div>
 </form>
-<script src="/js/common.js"></script>
+<script src="/js/join.js"></script>

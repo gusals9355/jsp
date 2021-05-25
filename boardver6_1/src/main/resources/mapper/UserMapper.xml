@@ -10,5 +10,8 @@
         select uid from t_user where uid = #{uid}
     </select>
 
+    <select id="selUser" resultType="UserEntity" parameterType="UserEntity">
+        SELECT iuser, uid, upw, unm FROM t_user WHERE uid = #{uid}
+    </select>
 
 </mapper>

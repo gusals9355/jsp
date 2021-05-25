@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.boardver6_1.model.dao.BoardCmtDAO">
+    <insert id="insBoardCmt"  parameterType="BoardCmtEntity" >
+        insert into t_board_cmt(iboard, iuser, cmt) values(#{iboard},#{iuser},#{cmt})
+    </insert>
+
+    <select id="selBoardCmtList" resultType="BoardCmtDomain" parameterType="BoardCmtEntity">
+        select a.icmt, a.cmt, a.regdate, b.iuser, b.unm as writerNm from t_board_cmt a inner join t_user b on a.iuser = b.iuser
+            where a.iboard = #{iboard}
+    </select>
+
+</mapper>

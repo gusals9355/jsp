@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <link rel="stylesheet" href="/css/common.css">
-
+<script defer src="/js/common.js"></script>
 <head>
     <title>${title}</title>
 </head>
@@ -9,11 +10,15 @@
 <header>
     <nav>
         <ul>
-            <li>로그아웃</li>
-            <li>로그인</li>
-            <li>리스트</li>
-            <li>글쓰기</li>
-            <li>좋아요</li>
+            <c:if test="${empty sessionScope.loginUser}">
+                <li><a href="/user/login">로그인</a></li>
+            </c:if>
+            <c:if test="${not empty sessionScope.loginUser}">
+                <li><a href="/user/logout">로그아웃</a></li>
+                <li><a href="/board/write">글쓰기</a></li>
+                <li><a href="/board/favoriteList">좋아요</a></li>
+            </c:if>
+            <li><a href="/board/list">리스트</a></li>
         </ul>
     </nav>
 </header>

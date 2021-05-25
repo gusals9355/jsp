@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping(value = "/user/*")
 public class UserController {
@@ -21,9 +24,23 @@ public class UserController {
         return MyUtils.TEMPLATE;
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginF(Model model ){
+    public String loginF(Model model, UserEntity vo, HttpSession session){
+        UserEntity result = userDAO.selUser(vo);
+        if(result == null){
+            model.addAttribute("errMsg","다시 확인해");
+        }else if(vo.getUpw().equals(result.getUpw())){
+            result.setUpw(null);
+            session.setAttribute("loginUser",result);
+            return "redirect:/board/list";
+        }
+        return "redirect:login";
+    }
 
-        return "";
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(Model model, HttpSession session, HttpServletRequest request){
+        session.invalidate();
+
+        return "redirect:login";
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.GET)

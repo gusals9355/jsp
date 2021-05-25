@@ -2,5 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.boardver6_1.model.dao.BoardDAO">
+    <select id="selBoardList" resultType="BoardDomain" parameterType="BoardDTO">
+        SELECT A.iboard, A.title, A.iuser, A.regdt, B.unm as writerNm
+				FROM t_board A
+				INNER JOIN t_user B
+				ON A.iuser = B.iuser
+		<choose>
+			<when test="searchType == 1">
+				WHERE A.title LIKE #{searchText} OR A.ctnt LIKE #{searchText}
+			</when>
+			<when test="searchType == 2">
+				WHERE A.title LIKE #{searchText}
+			</when>
+			<when test="searchType == 3">
+				WHERE A.ctnt LIKE #{searchText}
+			</when>
+			<when test="searchType == 4">
+				WHERE B.unm LIKE #{searchText}
+			</when>
+		</choose>
+				ORDER BY iboard DESC limit #{startIdx},#{recordCnt}
+    </select>
 
+	<select id="getPage" resultType="int" parameterType="BoardDTO">
+		select ceil(count(iboard) / 5) from t_board a
+		inner join t_user b
+		on a.iuser = b.iuser
+		<choose>
+			<when test="searchType == 1">
+				WHERE A.title LIKE #{searchText} OR A.ctnt LIKE #{searchText}
+			</when>
+			<when test="searchType == 2">
+				WHERE A.title LIKE #{searchText}
+			</when>
+			<when test="searchType == 3">
+				WHERE A.ctnt LIKE #{searchText}
+			</when>
+			<when test="searchType == 4">
+				WHERE B.unm LIKE #{searchText}
+			</when>
+		</choose>
+	</select>
+
+	<select id="selBoard" resultType="BoardDomain" parameterType="int">
+		select a.*, b.unm as writerNm from t_board a
+		inner join t_user b
+		on a.iuser = b.iuser
+		where iboard = #{iboard};
+	</select>
 </mapper>
